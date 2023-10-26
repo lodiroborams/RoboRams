@@ -20,7 +20,6 @@ public class Drive extends LinearOpMode {
     private Servo lift2;
 
 
-
     public void runOpMode() {
         FrontleftMotor = hardwareMap.get(DcMotor.class, "front_left");
         FrontrightMotor = hardwareMap.get(DcMotor.class, "front_right");
@@ -38,44 +37,45 @@ public class Drive extends LinearOpMode {
 
         waitForStart();
         if (opModeIsActive()) {
-        }
+
+            while (opModeIsActive()) {
 
 
-        double y = -gamepad1.left_stick_x;     // TODO ITERATION 1 gamepad 1
-        double x = gamepad1.left_stick_y; // counteract improer strafing
-        double rx = gamepad1.right_stick_x;
+                double y = -gamepad1.left_stick_x;     // TODO ITERATION 1 gamepad 1
+                double x = gamepad1.left_stick_y; // counteract improer strafing
+                double rx = gamepad1.right_stick_x;
 
 
-
-        double rotX = x * Math.cos(0) - y * Math.sin(0);
-        double rotY = x * Math.sin(0) + y * Math.cos(0);
-
-
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontleftPower = (rotY + rotX - rx) / denominator;
-        double backleftPower = (rotY - rotX + rx) / denominator;
-        double frontrightPower = (rotY - rotX - rx) / denominator;
-        double backrightPower = (rotY + rotX + rx) / denominator;
-
-        FrontleftMotor.setPower(frontleftPower);
-        FrontrightMotor.setPower(frontrightPower);
-        BackleftMotor.setPower(backleftPower);
-        BackrightMotor.setPower(backrightPower);
-
-        if (gamepad1.dpad_down){;
-
-            lift1.setPosition(0);
-            lift2.setPosition(0);
+                double rotX = x * Math.cos(0) - y * Math.sin(0);
+                double rotY = x * Math.sin(0) + y * Math.cos(0);
 
 
-        }
+                double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
+                double frontleftPower = (rotY + rotX - rx) / denominator;
+                double backleftPower = (rotY - rotX + rx) / denominator;
+                double frontrightPower = (rotY - rotX - rx) / denominator;
+                double backrightPower = (rotY + rotX + rx) / denominator;
 
-        if (gamepad1.dpad_up){;
+                FrontleftMotor.setPower(frontleftPower);
+                FrontrightMotor.setPower(frontrightPower);
+                BackleftMotor.setPower(backleftPower);
+                BackrightMotor.setPower(backrightPower);
 
-            lift1.setPosition(1);
-            lift2.setPosition(1);
 
+                if (gamepad1.a) {
+                    ;
+
+                    lift1.setPosition(-.4);
+                    lift2.setPosition(-.4);
+                }
+
+                if (gamepad1.x) {
+                    ;
+
+                    lift1.setPosition(.4);
+                    lift2.setPosition(.4);
+                }
+            }
         }
     }
-
 }
