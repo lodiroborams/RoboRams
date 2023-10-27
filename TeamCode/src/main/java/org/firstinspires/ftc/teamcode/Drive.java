@@ -37,7 +37,10 @@ public class Drive extends LinearOpMode {
 
         waitForStart();
         if (opModeIsActive()) {
-
+            
+            double lift1.setPosition(0);
+            double lift2.setPosition(0);
+            
             while (opModeIsActive()) {
 
 
@@ -65,15 +68,15 @@ public class Drive extends LinearOpMode {
                 if (gamepad1.a) {
                     ;
 
-                    lift1.setPosition(-.4);
-                    lift2.setPosition(-.4);
+                    lift1.setPosition(.4);
+                    lift2.setPosition(.4);
                 }
 
                 if (gamepad1.x) {
                     ;
 
-                    lift1.setPosition(.4);
-                    lift2.setPosition(.4);
+                    lift1.setPosition(.6);
+                    lift2.setPosition(.6);
                 }
             }
         }
