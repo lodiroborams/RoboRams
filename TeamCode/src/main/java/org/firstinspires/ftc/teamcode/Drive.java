@@ -84,7 +84,7 @@ public class Drive extends LinearOpMode {
 
                 ArmMotor.setPower(updown_stickPower);
 
-                Wrist.setPosition(updown_stickPower);
+                Wrist.setPosition(wrist_updownPower);
 
 
 
