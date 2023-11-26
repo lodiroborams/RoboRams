@@ -19,8 +19,8 @@ public class Drive extends LinearOpMode {
     private Servo Claw;
     private Servo Launcher;
     private Servo Wrist;
-    private CRServo Unstuck1;
-    private CRServo Unstuck2;
+    private Servo Unstuck1;
+    private Servo Unstuck2;
 
 
     public void runOpMode() {
@@ -105,14 +105,15 @@ public class Drive extends LinearOpMode {
                     
                 }
 
-                while (gamepad2.a){
-                    Unstuck1.setPower(1);
-                    Unstuck2.setPower(1);
+                if (gamepad2.a){
+                    Unstuck1.setPostion(1);
+                    Unstuck2.setPosition(1);
                 }
+                else {
+                Unstuck1.setPosition(0);
+                Unstuck2.SetPosition(0);
                 
-                Unstuck1.setPower(0);
-                Unstuck2.setPower(0);
-                    
+                }
 
             }
         }
