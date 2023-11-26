@@ -19,6 +19,8 @@ public class Drive extends LinearOpMode {
     private Servo Claw;
     private Servo Launcher;
     private Servo Wrist;
+    private CRServo Unstuck1;
+    private CRServo Unstuck2;
 
 
     public void runOpMode() {
@@ -30,6 +32,9 @@ public class Drive extends LinearOpMode {
         Claw = hardwareMap.get(Servo.class, "claw");
         Wrist = hardwareMap.get(Servo.class, "wrist");
         Launcher = hardwareMap.get(Servo.class, "launcher");
+        Unstuck1 = hardwareMap.get(CRServo.class, "unstuck1");
+        Unstuck2 = hardwareMap.get(CRServo.class, "unstuck2");
+
 
 
         FrontleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -97,7 +102,17 @@ public class Drive extends LinearOpMode {
 
                 if (gamepad2.x){
                     Launcher.setPosition(1);
+                    
                 }
+
+                while (gamepad2.a){
+                    Unstuck1.setPower(1);
+                    Unstuck2.setPower(1);
+                }
+                
+                Unstuck1.setPower(0);
+                Unstuck2.setPower(0);
+                    
 
             }
         }
