@@ -84,9 +84,6 @@ public class Drive extends LinearOpMode {
 
                 ArmMotor.setPower(updown_stickPower);
 
-                Wrist.setPosition(wrist_updownPower);
-
-
 
 
                 if (gamepad2.right_bumper) {
