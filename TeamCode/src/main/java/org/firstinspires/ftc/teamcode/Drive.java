@@ -89,13 +89,13 @@ public class Drive extends LinearOpMode {
 
 
                 if (gamepad2.right_bumper) {
-                    Claw.setPosition(0);
+                    Claw.setPosition(.1);
 
                 }
 
 
                 if (gamepad2.left_bumper) {
-                    Claw.setPosition(.1);
+                    Claw.setPosition(.2);
 
                 }
 
