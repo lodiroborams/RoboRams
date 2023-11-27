@@ -52,13 +52,14 @@ public class Parking extends LinearOpMode {
             while (opModeIsActive()) {
 
 
-                move(4, .3); // move forward to prepare for turn
+                move(1, .3); // move forward to prepare for turn
                 sleep(1000);
 //                rotate(11,.3);
 //                sleep(1000);
 //                move(8,.3);
 //                sleep(1000);
                 stop();
+
 
 
 
@@ -82,8 +83,8 @@ public class Parking extends LinearOpMode {
 
 
         FrontleftMotor.setTargetPosition(-distance * inch); // check movements of the motors for negative and positive values
-        FrontrightMotor.setTargetPosition(-distance * inch);
-        BackleftMotor.setTargetPosition(-distance * inch);
+        FrontrightMotor.setTargetPosition(distance * inch);
+        BackleftMotor.setTargetPosition(distance * inch);
         BackrightMotor.setTargetPosition(-distance * inch);
 
         FrontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);

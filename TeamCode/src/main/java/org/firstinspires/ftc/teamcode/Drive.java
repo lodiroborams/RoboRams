@@ -17,10 +17,13 @@ public class Drive extends LinearOpMode {
 
     //Servo
     private Servo Claw;
+    double wristInitPosition = .50;
+    double wristSensitivity = .50;
     private Servo Launcher;
     private Servo Wrist;
     private Servo Unstuck1;
     private Servo Unstuck2;
+
 
 
     public void runOpMode() {
@@ -32,8 +35,8 @@ public class Drive extends LinearOpMode {
         Claw = hardwareMap.get(Servo.class, "claw");
         Wrist = hardwareMap.get(Servo.class, "wrist");
         Launcher = hardwareMap.get(Servo.class, "launcher");
-        Unstuck1 = hardwareMap.get(CRServo.class, "unstuck1");
-        Unstuck2 = hardwareMap.get(CRServo.class, "unstuck2");
+        Unstuck1 = hardwareMap.get(Servo.class, "unstuck1");
+        Unstuck2 = hardwareMap.get(Servo.class, "unstuck2");
 
 
 
@@ -49,9 +52,12 @@ public class Drive extends LinearOpMode {
 
             ArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
-            Claw.setPosition(0);
+            Wrist.setDirection(Servo.Direction.REVERSE);
+            Wrist.setPosition(wristInitPosition);
 
-            Wrist.setPosition(0);
+            Claw.setPosition(.1);
+
+            Wrist.setPosition(.4);
 
             Launcher.setPosition(0);
 
@@ -62,11 +68,10 @@ public class Drive extends LinearOpMode {
   right stick should be forward, left, back, right
 */
                 double strafe_stick = -gamepad1.left_stick_y;     // TODO ITERATION 1 gamepad 1
-                double rotate_stick = -gamepad1.left_stick_x; // counteract improer strafing
+                double rotate_stick = gamepad1.left_stick_x; // counteract improer strafing
                 double forwardback_stick = -gamepad1.right_stick_y;
 
                 double updown_stick = -gamepad2.left_stick_y;     // TODO ITERATION 1
-                double wrist_updown = -gamepad2.right_stick_y;
 
                 double frontleftPower = forwardback_stick + rotate_stick - strafe_stick;
                 double frontrightPower = forwardback_stick - rotate_stick + strafe_stick;
@@ -74,17 +79,17 @@ public class Drive extends LinearOpMode {
                 double backrightPower = forwardback_stick -rotate_stick - strafe_stick;
 
                 double updown_stickPower = updown_stick;
-                double wrist_updownPower = wrist_updown;
 
 
-                FrontleftMotor.setPower(-frontleftPower);
-                FrontrightMotor.setPower(-frontrightPower);
+                Wrist.setPosition(wristInitPosition + (gamepad2.right_stick_y * wristSensitivity));
+
+
+                FrontleftMotor.setPower(frontleftPower);
+                FrontrightMotor.setPower(frontrightPower);
                 BackleftMotor.setPower(backleftPower);
                 BackrightMotor.setPower(backrightPower);
 
                 ArmMotor.setPower(updown_stickPower);
-
-                Wrist.setPosition(wrist_updownPower);
 
 
 
@@ -105,12 +110,12 @@ public class Drive extends LinearOpMode {
                 }
 
                 if (gamepad2.a){
-                    Unstuck1.setPostion(1);
+                    Unstuck1.setPosition(1);
                     Unstuck2.setPosition(1);
                 }
                 else {
                 Unstuck1.setPosition(0);
-                Unstuck2.SetPosition(0);
+                Unstuck2.setPosition(0);
                 
                 }
 
