@@ -9,9 +9,28 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class Blue extends LinearOpMode {
 
     private DcMotor Frontleftmotor;
+    private double motorFLZeroPower = 0.0;
+    private double motorFLPower = 1.0;
+    private int motorFLPositionOne = 0;
+    private int motorFLPositionTwo = 1000;
+
     private DcMotor Frontrightmotor;
+    private double motorFRZeroPower = 0.0;
+    private double motorFRPower = 1.0;
+    private int motorFRPositionOne = 0;
+    private int motorFRPositionTwo = 1000;
+
     private DcMotor Backleftmotor;
+    private double motorBLZeroPower = 0.0;
+    private double motorBLPower = 1.0;
+    private int motorBLPositionOne = 0;
+    private int motorBLPositionTwo = 1000;
+
     private DcMotor Backrightmotor;
+    private double motorBRZeroPower = 0.0;
+    private double motorBRPower = 1.0;
+    private int motorBRPositionOne = 0;
+    private int motorBRPositionTwo = 1000;
 
 
 
@@ -29,22 +48,63 @@ public class Blue extends LinearOpMode {
         Backleftmotor.setDirection(DcMotor.Direction.FORWARD);
         Backrightmotor.setDirection(DcMotor.Direction.FORWARD);
 
-        Frontleftmotor.setPower(0);
-        Backleftmotor.setPower(0);
-        Frontrightmotor.setPower(0);
-        Backrightmotor.setPower(0);
-
-        Frontleftmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Frontrightmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Backleftmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        Backrightmotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        Frontleftmotor.setPower(motorFLPower);
+        Backleftmotor.setPower(motorBLPower);
+        Frontrightmotor.setPower(motorFRPower);
+        Backrightmotor.setPower(motorBRPower);
 
         Frontleftmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Frontrightmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Backleftmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         Backrightmotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        Frontleftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Frontrightmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Backleftmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Backrightmotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         waitForStart();
+        if (opModeIsActive()) {
+
+            while (opModeIsActive()) {
+
+
+
+
+
+
+
+            }
+
+
+        }
+
+
+    }
+
+    private void moveFoward (int position) {
+        Frontleftmotor.setTargetPosition(position);
+        Frontrightmotor.setTargetPosition(position);
+        Backleftmotor.setTargetPosition(position);
+        Backrightmotor.setTargetPosition(position);
+
+        Frontleftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Frontrightmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Backleftmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        Backrightmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        Frontleftmotor.setPower(motorFLPower);
+        Frontrightmotor.setPower(motorFRPower);
+        Backleftmotor.setPower(motorBLPower);
+        Backrightmotor.setPower(motorBRPower);
+
+        while (opModeIsActive() && (Frontleftmotor.isBusy() || Frontrightmotor.isBusy() || Backleftmotor.isBusy() || Backrightmotor.isBusy())) {
+        }
+        Frontleftmotor.setPower(motorFLZeroPower);
+        Frontrightmotor.setPower(motorFRPower);
+        Backleftmotor.setPower(motorBLZeroPower);
+        Backrightmotor.setPower(motorBRPower);
+
     }
 
 }

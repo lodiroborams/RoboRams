@@ -35,15 +35,16 @@ public class Parking extends LinearOpMode {
         FrontrightMotor.setPower(0);
         BackrightMotor.setPower(0);
 
-        FrontleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FrontrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BackleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BackrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         FrontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        FrontleftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FrontrightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BackleftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BackrightMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
         waitForStart();

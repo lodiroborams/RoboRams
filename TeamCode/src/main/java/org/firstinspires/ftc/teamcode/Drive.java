@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -13,7 +14,12 @@ public class Drive extends LinearOpMode {
     private DcMotor FrontrightMotor;
     private DcMotor BackleftMotor;
     private DcMotor BackrightMotor;
-    private DcMotor ArmMotor;
+
+    private DcMotorEx ArmMotor;
+    private double ArmMotorZeroPower = 0.0;
+    private double ArmMotorMaxPower = 1.0;
+    private double currentVelocity = 0.0;
+    private double maxVelocity = 0.0;
 
     //Servo
     private Servo Claw;
@@ -31,7 +37,7 @@ public class Drive extends LinearOpMode {
         FrontrightMotor = hardwareMap.get(DcMotor.class, "front_right");
         BackleftMotor = hardwareMap.get(DcMotor.class, "back_left");
         BackrightMotor = hardwareMap.get(DcMotor.class, "back_right");
-        ArmMotor = hardwareMap.get(DcMotor.class, "arm_motor");
+        ArmMotor = hardwareMap.get(DcMotorEx.class, "arm_motor");
         Claw = hardwareMap.get(Servo.class, "claw");
         Wrist = hardwareMap.get(Servo.class, "wrist");
         Launcher = hardwareMap.get(Servo.class, "launcher");
@@ -44,13 +50,18 @@ public class Drive extends LinearOpMode {
         FrontrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        ArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        //PID for Arm motor
+        ArmMotor.setDirection(DcMotorEx.Direction.FORWARD);
+        ArmMotor.setPower(ArmMotorZeroPower);
+        ArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+
 
 
         waitForStart();
         if (opModeIsActive()) {
-
-            ArmMotor.setDirection(DcMotorSimple.Direction.REVERSE);
 
             Wrist.setDirection(Servo.Direction.REVERSE);
             Wrist.setPosition(wristInitPosition);
@@ -62,11 +73,12 @@ public class Drive extends LinearOpMode {
             Launcher.setPosition(0);
 
             while (opModeIsActive()) {
-/*
-  see what the inputs are for this code right now right down what you think
-  left stick should be rotating controls
-  right stick should be forward, left, back, right
-*/
+
+                ArmMotorMaxVelocityTest();
+                motorTelemetry();
+
+
+
                 double strafe_stick = -gamepad1.left_stick_y;     // TODO ITERATION 1 gamepad 1
                 double rotate_stick = gamepad1.left_stick_x; // counteract improer strafing
                 double forwardback_stick = -gamepad1.right_stick_y;
@@ -121,5 +133,19 @@ public class Drive extends LinearOpMode {
 
             }
         }
+    }
+    public void ArmMotorMaxVelocityTest(){
+        ArmMotor.setPower(ArmMotorMaxPower);
+        currentVelocity = ArmMotor.getVelocity();
+        if (currentVelocity > maxVelocity) {
+            maxVelocity = currentVelocity;
+        }
+    }
+
+    public void motorTelemetry() {
+        telemetry.addData("Current Power", ArmMotor.getPower());
+        telemetry.addData("Maximum Velocity", maxVelocity);
+        telemetry.addData("Current Velocity", currentVelocity);
+        telemetry.update();
     }
 }
