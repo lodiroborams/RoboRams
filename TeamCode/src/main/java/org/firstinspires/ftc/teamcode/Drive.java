@@ -51,6 +51,12 @@ public class Drive extends LinearOpMode {
         BackleftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackrightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
+        FrontleftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        FrontrightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        BackleftMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+        BackrightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
         //PID for Arm motor
         ArmMotor.setDirection(DcMotorEx.Direction.FORWARD);
         ArmMotor.setPower(ArmMotorZeroPower);
@@ -79,9 +85,9 @@ public class Drive extends LinearOpMode {
 
 
 
-                double strafe_stick = -gamepad1.left_stick_y;     // TODO ITERATION 1 gamepad 1
-                double rotate_stick = gamepad1.left_stick_x; // counteract improer strafing
-                double forwardback_stick = -gamepad1.right_stick_y;
+                double strafe_stick = gamepad1.right_stick_x;     // TODO ITERATION 1 gamepad 1
+                double rotate_stick = -gamepad1.left_stick_x; // counteract improer strafing
+                double forwardback_stick = gamepad1.right_stick_y;
 
                 double updown_stick = -gamepad2.left_stick_y;     // TODO ITERATION 1
 
@@ -112,7 +118,7 @@ public class Drive extends LinearOpMode {
 
 
                 if (gamepad2.left_bumper) {
-                    Claw.setPosition(.2);
+                    Claw.setPosition(.9);
 
                 }
 

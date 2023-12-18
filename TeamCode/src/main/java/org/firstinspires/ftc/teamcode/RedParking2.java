@@ -3,10 +3,11 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous
-public class Parking extends LinearOpMode {
+public class RedParking2 extends LinearOpMode {
 
     //Motor
     private DcMotor FrontleftMotor;
@@ -23,6 +24,11 @@ public class Parking extends LinearOpMode {
         FrontrightMotor = hardwareMap.get(DcMotor.class, "front_right");
         BackleftMotor = hardwareMap.get(DcMotor.class, "back_left");
         BackrightMotor = hardwareMap.get(DcMotor.class, "back_right");
+
+        FrontleftMotor.setDirection(DcMotor.Direction.FORWARD);
+        FrontrightMotor.setDirection(DcMotor.Direction.REVERSE);
+        BackleftMotor.setDirection(DcMotor.Direction.FORWARD);
+        BackrightMotor.setDirection(DcMotor.Direction.REVERSE);
 
 
         FrontleftMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -50,23 +56,10 @@ public class Parking extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()) {
 
-            while (opModeIsActive()) {
-
-
-                move(1, .3); // move forward to prepare for turn
-                sleep(1000);
-//                rotate(11,.3);
-//                sleep(1000);
-//                move(8,.3);
-//                sleep(1000);
-                stop();
-
-
-
-
-
-
-            }
+            moveFoward(5,1);
+            strafeleft(28,1);
+            moveFoward(43,1);
+            strafeleft(85,1);
 
 
         }
@@ -74,7 +67,7 @@ public class Parking extends LinearOpMode {
     }
 
 
-    private void move(int distance, double power) {
+    private void moveFoward (int distance, double power) {
 
         //int power = 0;
         FrontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -84,8 +77,8 @@ public class Parking extends LinearOpMode {
 
 
         FrontleftMotor.setTargetPosition(-distance * inch); // check movements of the motors for negative and positive values
-        FrontrightMotor.setTargetPosition(distance * inch);
-        BackleftMotor.setTargetPosition(distance * inch);
+        FrontrightMotor.setTargetPosition(-distance * inch);
+        BackleftMotor.setTargetPosition(-distance * inch);
         BackrightMotor.setTargetPosition(-distance * inch);
 
         FrontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -108,7 +101,8 @@ public class Parking extends LinearOpMode {
         BackrightMotor.setPower(0);
 
     }
-    private void rotate(int distance, double power){
+
+    private void strafeleft (int distance, double power) {
 
         //int power = 0;
         FrontleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -116,10 +110,11 @@ public class Parking extends LinearOpMode {
         BackleftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackrightMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        FrontleftMotor.setTargetPosition(distance * inch); //
-        FrontrightMotor.setTargetPosition(distance * inch);
+
+        FrontleftMotor.setTargetPosition(distance * inch); // check movements of the motors for negative and positive values
+        FrontrightMotor.setTargetPosition(-distance * inch);
         BackleftMotor.setTargetPosition(-distance * inch);
-        BackrightMotor.setTargetPosition(-distance * inch);
+        BackrightMotor.setTargetPosition(distance * inch);
 
         FrontleftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FrontrightMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -132,20 +127,14 @@ public class Parking extends LinearOpMode {
         BackrightMotor.setPower(power);
 
         //Forward
-
-        while (opModeIsActive() && (FrontleftMotor.isBusy() || FrontrightMotor.isBusy() || BackleftMotor.isBusy() || BackrightMotor.isBusy())){
+        while (opModeIsActive() && (FrontleftMotor.isBusy() || FrontrightMotor.isBusy() || BackleftMotor.isBusy() || BackrightMotor.isBusy())) {
 
         }
-
-
-        // tics per revolution = 1440
-        // one revolution = 12.56 inches of distance (4 pi)
-        // one inch equals = 114.591559 tics
-
         FrontleftMotor.setPower(0);
         FrontrightMotor.setPower(0);
         BackleftMotor.setPower(0);
         BackrightMotor.setPower(0);
+
     }
 
 }
