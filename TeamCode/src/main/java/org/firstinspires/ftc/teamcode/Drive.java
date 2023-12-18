@@ -98,6 +98,8 @@ public class Drive extends LinearOpMode {
 
                 double updown_stickPower = updown_stick;
 
+            ArmMotor.setDirection(DcMotorEx.Direction.REVERSE);
+
 
                 Wrist.setPosition(wristInitPosition + (gamepad2.right_stick_y * wristSensitivity));
 
